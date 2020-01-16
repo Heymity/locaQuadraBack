@@ -17,6 +17,10 @@
 
 const Route = use('Route')
 
+Route.post("/court/:id/images", "ImageController.store").middleware('auth');
+Route.post("/institution/:id/images", "ImageController.store").middleware('auth');
+Route.post("/atual", "AuthController.atual")
+Route.get('/images/:path', 'ImageController.show');
 Route.post("/register", "AuthController.register");
 Route.post("/authenticate", "AuthController.authenticate");
 Route.get("/index", "AuthController.index");

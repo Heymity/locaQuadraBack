@@ -22,8 +22,15 @@ class InstitutionController {
    * @param {View} ctx.view
    */
   async index () {
-    const Institutions = await Institution.query().with("user").fetch()
-    return Institutions
+    const institutions = await Institution.query().with("user").with("courtReservation").fetch()
+    var imageInstitutions = [];
+    for (var i = 0;i < institutions.rows.length;i++)
+    {
+      var institution = institutions.rows[i]
+      await institution.load('images')
+      imageInstitutions.push(institution)
+    }
+    return imageInstitutions
   }
 
 
@@ -52,6 +59,7 @@ class InstitutionController {
    */
   async show ({ params }) {
     const institution = await Institution.query().with("user").fetch(params.id)
+    institution.load('images')
     return institution
   }
 

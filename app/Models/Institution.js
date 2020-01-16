@@ -7,6 +7,12 @@ class Institution extends Model {
     user () {
         return this.belongsTo('App/Models/User')
     }
+    courtReservation () {
+        return this.hasMany('App/Models/CourtReservation')
+    }
+    images () {
+        return this.hasMany('App/Models/Image')
+    }
 }
 
 module.exports = Institution

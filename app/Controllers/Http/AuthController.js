@@ -6,10 +6,12 @@ class AuthController {
 
         const User = use('App/Models/User')
 
-        const data = request.only(['username', 'email', 'password', 'admin', 'institution'])
+        const data = request.only(['username', 'email', 'password', 'admin', 'institution', 'institution_id'])
  
         const user = await User.create(data)
- 
+        
+        console.log(data)
+
         return user
  
     }
@@ -20,14 +22,33 @@ class AuthController {
         const users = await User.all()
         return users
     }
+
+    async atual({ request })
+    {
+        const User = use('App/Models/User')
+        const Database = use('Database')
+        const { email } = request.all()
+
+        var users = await Database.from('users').where('email', email)
+        var ins = await Database.from('institutions').where('user_id', users[0].id)
+        users.push(ins[0])
+
+        return users
+    }
  
     async authenticate({ request, auth }){
 
+        let resp = []
+
+        const Database = use('Database')
         const { email, password } = request.all()
  
         const token = await auth.attempt(email, password)
- 
-        return token
+        const user = await Database.from('users').where('email', email)
+        resp.push(token)
+        resp.push(user[0])
+
+        return resp
  
     }
 

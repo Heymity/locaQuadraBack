@@ -20,8 +20,16 @@ class CourtController {
    * @param {View} ctx.view
    */
   async index () {
-    const court = await Court.query().with("user").fetch()
-    return court
+    const courts = await Court.query().with("user").with("courtReservation").fetch()
+    var imageCourts = [];
+    for (var i = 0;i < courts.rows.length;i++)
+    {
+      var court = courts.rows[i]
+      await court.load('images')
+      imageCourts.push(court)
+      //console.log(court)
+    }
+    return imageCourts
   }
 
   /**
@@ -52,6 +60,7 @@ class CourtController {
    */
   async show ({ params }) {
     const court = await Court.query().with("user").fetch(params.id)
+    court.load('images')
     return court
   }
 
