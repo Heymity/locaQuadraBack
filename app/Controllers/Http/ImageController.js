@@ -14,7 +14,7 @@ class ImageController {
         console.log(profile)
         const images = request.file('image', {
           types: ['image'],
-          size: '10mb'
+          size: '2mb'
         })
         console.log("Still going")
         await images.moveAll(Helpers.tmpPath('uploads'), file => ({
