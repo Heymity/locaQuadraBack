@@ -41,7 +41,7 @@ class CourtController {
    * @param {Response} ctx.response
    */
   async store ({ request, auth }) {
-    const data = request.only(["name", "image"])
+    const data = request.only(["name", "image", "description"])
     if (auth.user.admin == true){
       const court = await Court.create({ user_id: auth.user.id,...data })
       return court
@@ -75,7 +75,7 @@ class CourtController {
    */
   async update ({ params, auth, request }) {
     const court = await Court.findOrFail(params.id)
-    const data = request.only(["name", "image"])
+    const data = request.only(["name", "image", "description"])
     if (auth.user.admin == true){
       court.merge(data)
       await court.save()

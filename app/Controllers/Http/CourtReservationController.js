@@ -37,9 +37,10 @@ class CourtReservationController {
    */
   async store ({ request, auth }) {
     const data = request.only(["timeIn", "timeOut", "court_id", "institution_id"])
-    if(auth.user.institution == true)
+    console.log("auth: ", auth.user.$attributes.institution, "data:\n", data)
+    if(auth.user.$attributes.institution == true)
     {
-
+      console.log("saving...\n")
       const courtReserv = await CourtReservation.create({ ...data })
       return courtReserv
     }

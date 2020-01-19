@@ -43,7 +43,7 @@ class InstitutionController {
    * @param {Response} ctx.response
    */
   async store ({ request, auth }) {
-    const data = request.only(["name", "image"])
+    const data = request.only(["name", "image", "description"])
     const institution = await Institution.create({ user_id: auth.user.id,...data })
     return institution
   }
@@ -72,9 +72,9 @@ class InstitutionController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request, response, auth }) {
     const institution = await Institution.findOrFail(params.id)
-    const data = request.only(["name", "image"])
+    const data = request.only(["name", "image", "description"])
     if (institution.user_id != auth.user.id){
       institution.merge(data)
       await institution.save()
