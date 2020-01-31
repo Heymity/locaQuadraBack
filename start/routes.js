@@ -25,6 +25,7 @@ Route.get('/images/:path', 'ImageController.show');
 Route.post("/register", "AuthController.register");
 Route.post("/authenticate", "AuthController.authenticate");
 Route.get("/index", "AuthController.index");
+Route.get("/squadindex/:id", "SquadController.insIndex");
 
 Route.get("/app", "AppController.index").middleware(["auth"]);
 
@@ -32,4 +33,5 @@ Route.group(()=>{
   Route.resource("institution", "InstitutionController").apiOnly();
   Route.resource("court", "CourtController").apiOnly();
   Route.resource("reserv", "CourtReservationController").apiOnly();
+  Route.resource("squad", "SquadController").apiOnly();
 }).middleware('auth');

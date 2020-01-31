@@ -13,6 +13,9 @@ class Institution extends Model {
     images () {
         return this.hasMany('App/Models/Image')
     }
+    squad () {
+        return this.hasMany('App/Models/Squad')
+    }
 }
 
 module.exports = Institution

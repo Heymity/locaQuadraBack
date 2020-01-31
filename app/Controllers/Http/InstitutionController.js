@@ -22,7 +22,7 @@ class InstitutionController {
    * @param {View} ctx.view
    */
   async index () {
-    const institutions = await Institution.query().with("user").with("courtReservation").fetch()
+    const institutions = await Institution.query().with("user").with("courtReservation").with("squad").fetch()
     var imageInstitutions = [];
     for (var i = 0;i < institutions.rows.length;i++)
     {
